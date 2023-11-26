@@ -1,5 +1,6 @@
 const mongodb = require('../db/connect');
 const objectId = require('mongodb').ObjectId;
+
 const getAll = async (req, res) => {
   //#swagger .tags=['customers']
     const result = await mongodb.getDb().db().collection('customer').find();
@@ -8,6 +9,22 @@ const getAll = async (req, res) => {
         res.status(200).json(customers);
       });
   };
+
+  // const getAll = (req, res) => {
+  //   mongodb
+  //     .getDb()
+  //     .db()
+  //     .collection('customers')
+  //     .find()
+  //     .toArray((err, customers) => {
+  //       if (err) {
+  //         res.status(400).json({ message: err });
+  //       }
+  //       res.setHeader('Content-Type', 'application/json');
+  //       res.status(200).json(customers);
+  //     });
+  // };
+  
 
 const getSingle = async (req, res) => {
   //#swagger .tags=['customers']
