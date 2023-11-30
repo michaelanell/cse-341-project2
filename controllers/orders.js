@@ -3,7 +3,10 @@ const objectId = require('mongodb').ObjectId;
 const getAll = async (req, res) => {
   //#swagger .tags=['orders']
     const result = await mongodb.getDb().db().collection('order').find();
-    result.toArray().then((orders) => {
+    result.toArray().then((orders, err) => {
+      if (err) {
+        res.status(400).json({ message: err });
+      }
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(orders);
       });
@@ -11,15 +14,21 @@ const getAll = async (req, res) => {
 
 const getSingle = async (req, res) => {
   //#swagger .tags=['orders']
+  if (!objectId.isValid(req.params.id)) {
+    res.status(400).json('Must use a valid order id to find an order.');
+  }
     const orderId = new objectId(req.params.id);
     const result = await mongodb.getDb().db().collection('order').find({_id: orderId});
-    result.toArray().then((orders) => {
+    result.toArray().then((orders, err) => {
+      if (err) {
+        res.status(400).json({ message: err });
+      }
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(orders[0]);
       });
 };
 
-const  createOrder = async(req, res) => {
+const createOrder = async(req, res) => {
   //#swagger .tags=['orderId']
     const order = {
         pickup_time: req.body.pickup_time,
@@ -42,6 +51,9 @@ const  createOrder = async(req, res) => {
 const  updateOrder = async(req, res) => {
   //#swagger .tags=['orders']
  // console.log('update order');
+ if (!objectId.isValid(req.params.id)) {
+  res.status(400).json('Must use a valid order id to update an order.');
+}
   const orderId = new objectId(req.params.id);
   const order = {
     pickup_time: req.body.pickup_time,
@@ -63,6 +75,9 @@ const  updateOrder = async(req, res) => {
 const deleteOrder = async(req, res) => {
   //#swagger .tags=['order']
   //console.log('delete order');
+  if (!objectId.isValid(req.params.id)) {
+    res.status(400).json('Must use a valid order id to delete an order.');
+  }
   const orderId = new objectId(req.params.id);
   const response = await mongodb.getDb().db().collection('order').deleteOne({ _id: orderId}, true);
   if (response.deletedCount > 0){

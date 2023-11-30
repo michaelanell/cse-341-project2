@@ -1,36 +1,45 @@
 const mongodb = require('../db/connect');
 const objectId = require('mongodb').ObjectId;
 
-const getAll = async (req, res) => {
-  //#swagger .tags=['customers']
-    const result = await mongodb.getDb().db().collection('customer').find();
-    result.toArray().then((customers) => {
+// const getAll = async (req, res) => {
+//   //#swagger .tags=['customers']
+//     const result = await mongodb.getDb().db().collection('customer').find();
+//     result.toArray().then((customers) => {
+//         res.setHeader('Content-Type', 'application/json');
+//         res.status(200).json(customers);
+//       });
+//   };
+
+  const getAll = (req, res) => {
+    console.log(mongodb.getDb());
+    mongodb
+      .getDb()
+      .db()
+      .collection('customer')
+      .find()
+      .toArray().then((customers, err) => {
+        console.log(customers);
+       if (err) {
+          res.status(400).json({ message: err });
+        }
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(customers);
       });
   };
 
-  // const getAll = (req, res) => {
-  //   mongodb
-  //     .getDb()
-  //     .db()
-  //     .collection('customers')
-  //     .find()
-  //     .toArray((err, customers) => {
-  //       if (err) {
-  //         res.status(400).json({ message: err });
-  //       }
-  //       res.setHeader('Content-Type', 'application/json');
-  //       res.status(200).json(customers);
-  //     });
-  // };
   
 
 const getSingle = async (req, res) => {
+  if (!objectId.isValid(req.params.id)) {
+    res.status(400).json('Must use a valid customer id to find a customer.');
+  }
   //#swagger .tags=['customers']
     const customerId = new objectId(req.params.id);
     const result = await mongodb.getDb().db().collection('customer').find({_id: customerId});
-    result.toArray().then((customers) => {
+    result.toArray().then((customers, err) => {
+      if (err) {
+        res.status(400).json({ message: err });
+      }
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(customers[0]);
       });
@@ -59,6 +68,9 @@ const  createCustomer = async(req, res) => {
 const  updateCustomer = async(req, res) => {
   //#swagger .tags=['Users']
   //console.log('update customer');
+  if (!objectId.isValid(req.params.id)) {
+    res.status(400).json('Must use a valid customer id to update a customer.');
+  }
   const customerId = new objectId(req.params.id);
   const customer = {
     first_name: req.body.first_name,
@@ -80,6 +92,9 @@ const  updateCustomer = async(req, res) => {
 const deleteCustomer = async(req, res) => {
   //#swagger .tags=['customer']
   //console.log('delete customer');
+  if (!objectId.isValid(req.params.id)) {
+    res.status(400).json('Must use a valid customer id to delete a customer.');
+  }
   const customerId = new objectId(req.params.id);
   const response = await mongodb.getDb().db().collection('customer').deleteOne({ _id: customerId},true);
   if (response.deletedCount > 0){
