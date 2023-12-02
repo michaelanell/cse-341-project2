@@ -1,0 +1,62 @@
+// LOCALHOST 
+### Get all orders GET http://localhost:3000/orders
+
+### Get order by id GET http://localhost:3000/orders/622023f642f9ab4cd6e060b3
+
+### Create order POST http://localhost:3000/orders HTTP/1.1 content-type: application/json
+
+{
+"pickup_time":"05:35:08", "order_date":"2023-11-12", "email":"testing@test.com", "entree":"Cheese burger","drink":"Sprite","side":"salad","dessert":"brownie","notes":"Extra pickles"
+}
+
+### PUT order PUT http://localhost:3000/orders/6562c4c0e8d933eecb52849d HTTP/1.1 content-type: application/json
+
+{"pickup_time":"05:35:08","order_date":"2023-11-13","entree":"salad","drink":"none","side":"french fries","dessert":"none","notes":"none"}
+
+### DELETE orders DELETE http://localhost:3000/orders/65683023f0986207ea2109f3 HTTP/1.1
+
+
+// LOCALHOST 
+### Get all orders GET http://localhost:3000/customers
+
+### Get order by id GET http://localhost:3000/customers/6561a2ecc5fd7153907e22d6
+
+### Create order POST http://localhost:3000/customers HTTP/1.1 content-type: application/json
+
+{"first_name":"Kelly","last_name":"Jones","rewards_number":78998,"email":"Kelly@email.com","phone_number":"678 678 7878","zip":87690,"card_number":"45677788709876"}
+
+### PUT order PUThttp://localhost:3000/customers/6561a2ecc5fd7153907e22d6 HTTP/1.1 content-type: application/json
+
+{"first_name":"Cohen","last_name":"Black","rewards_number":"23423","email":"cohen@email.com","phone_number":"566 789  5676","zip":"67890","card_number":"7898675778983654"}
+
+### DELETE orders DELETE http://localhost:3000/customers/6561a2ecc5fd7153907e22d6 HTTP/1.1
+
+
+// PRODUCTION Deploy 
+### Get all orders GET https://cse341-project2-z5y7.onrender.com/orders
+
+### Get contact by id GET https://cse341-project2-z5y7.onrender.com/orders/65683023f0986207ea2109f3
+
+### Create contact POST https://cse341-project2-z5y7.onrender.com/orders/ HTTP/1.1 content-type: application/json
+
+{"pickup_time":"05:37:22","order_date":"2023-11-13","entree":"grilled cheese","drink":"DR Pepper","side":"Fries","dessert":"Cake","notes":"none"},
+### PUT contact PUT https://cse341-project2-z5y7.onrender.com/orders/65617b0e310a322928946250 HTTP/1.1 content-type: application/json
+
+{"_id":"6562c4c0e8d933eecb52849d","pickup_time":"05:37:30","order_date":"2023-11-28","entree":"Protein bowl","drink":"none","side":"none","dessert":"none","notes":"none"},
+
+### DELETE contact DELETE https://cse341-project2-z5y7.onrender.com/orders/65617b0e310a322928946250 HTTP/1.1
+
+// PRODUCTION Deploy  
+### Get all orders GET https://cse341-project2-z5y7.onrender.com/customers
+
+### Get order by id GET https://cse341-project2-z5y7.onrender.com/customers/6561a2ecc5fd7153907e22d6
+
+### Create order POST https://cse341-project2-z5y7.onrender.com/customers HTTP/1.1 content-type: application/json
+
+{"first_name":"Kelly","last_name":"Jones","rewards_number":78998,"email":"Kelly@email.com","phone_number":"678 678 7878","zip":87690,"card_number":"45677788709876"}
+
+### PUT order PUT https://cse341-project2-z5y7.onrender.com/customers/6561a2ecc5fd7153907e22d6 HTTP/1.1 content-type: application/json
+
+{"first_name":"Cohen","last_name":"Black","rewards_number":"23423","email":"cohen@email.com","phone_number":"566 789  5676","zip":"67890","card_number":"7898675778983654"}
+
+### DELETE orders DELETE https://cse341-project2-z5y7.onrender.com/customers/6561a2ecc5fd7153907e22d6 HTTP/1.1
